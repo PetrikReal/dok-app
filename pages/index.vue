@@ -1,5 +1,8 @@
 <template>
-    <div>
+    <div v-if="!pb.authStore.model.isSetup">
+        <setup />
+    </div>
+    <div v-else>
         <h1 class="text-4xl font-bold text-center py-4">Szia {{ pb.authStore.model.username }}!</h1>
     </div>
 </template>
@@ -7,12 +10,6 @@
 <script setup lang="ts">
 import PocketBase from 'pocketbase';
 const pb = new PocketBase('https://pb.urbinturbina.tech')
-console.log(pb.authStore.isValid)
-
-async function signOut() {
-    pb.authStore.clear()
-    navigateTo("/login")
-}
 
 definePageMeta({
     middleware: "auth",

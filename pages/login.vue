@@ -17,6 +17,10 @@ async function signInWithMicrosoft() {
     pb.authStore.clear()
     const authData = await pb.collection('users').authWithOAuth2({
       provider: 'microsoft',
+      createData: {
+        isAdmin: false,
+        isSetup: false
+      }
     })
     console.log(authData)
     console.log(pb.authStore.exportToCookie({ httpOnly: false }))
