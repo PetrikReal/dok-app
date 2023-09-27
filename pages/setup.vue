@@ -1,41 +1,45 @@
-<template>
-    <div class="flex flex-col items-center">
-        <h1 class="text-center text-4xl font-bold pt-4">Név beállítása</h1>
-        <UForm :validate="validate" :state="state" @submit="submit">
-            <UInput class="pb-4" size="lg" placeholder="Teljes Neved" v-model="state.fullName" />
-        </UForm>
-        <UButton @click="setup">Kész</UButton>
-    </div>
-</template>
-
 <script setup lang="ts">
 import PocketBase from 'pocketbase';
+const pb = new PocketBase('https://pb.urbinturbina.tech')
 import { ref } from 'vue'
 import type { FormError, FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
-const pb = new PocketBase('https://pb.urbinturbina.tech')
-
 const state = ref({
-    fullName: undefined,
+  fullName: undefined,
 })
-
 const validate = (state: any): FormError[] => {
-    const errors = []
-    if (!state.fullName) errors.push({ path: 'fullName', message: 'Kötelező mező' })
-    return errors
+  const errors = []
+  if (!state.fullName) errors.push({ path: 'fullName', message: 'Required' })
+  return errors
+}
+async function submit(event: FormSubmitEvent<any>) {
+  const data = {
+    "isSetup": true,
+    "name": event.data.fullName
+  }
+  await pb.collection('users').update(pb.authStore.model.id, data);
+  navigateTo("/")
 }
 
 async function setup() {
-    const data = {
-        "isSetup": true,
-        "name": state.fullName
-    }
-    await pb.collection('users').update(pb.authStore.model.id, data);
-    navigateTo("/")
+
+  navigateTo("/")
 }
 
 definePageMeta({
-    layout: "normal"
+  layout: "normal",
+
 })
 </script>
-
-<style lang="scss" scoped></style>
+<template>
+  <div class="flex flex-col justify-center">
+    <h1 class="py-4 text-center text-4xl font-bold">Account Setup</h1>
+    <UForm :validate="validate" :state="state" @submit="submit" class="self-center">
+      <UFormGroup class="py-2" label="Teljes név" name="fullName">
+        <UInput v-model="state.fullName" />
+      </UFormGroup>
+      <UButton type="submit">
+        Submit
+      </UButton>
+    </UForm>
+  </div>
+</template>

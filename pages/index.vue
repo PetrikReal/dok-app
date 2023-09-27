@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="text-4xl font-bold text-center py-4">Szia {{ pb.authStore.model.username }}!</h1>
+        <h1 class="text-4xl font-bold text-center py-4">Szia {{ pb.authStore.model.name }}!</h1>
     </div>
 </template>
 
