@@ -1,8 +1,8 @@
 import PocketBase from 'pocketbase';
-const pb = new PocketBase('http://localhost:8090')
+const pb = new PocketBase('https://pb.urbinturbina.tech')
 
 export default defineNuxtRouteMiddleware((to, from) => {
-   if(!pb.authStore.model.isSetup){
+   if(pb.authStore.model.isSetup == false){
     return navigateTo("/setup")
    }
 })
