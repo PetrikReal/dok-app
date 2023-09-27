@@ -24,10 +24,6 @@ async function setup() {
 
   navigateTo("/")
 }
-
-definePageMeta({
-  layout: "normal"
-})
 </script>
 <template>
   <div class="flex flex-col justify-center">
