@@ -27,6 +27,7 @@ async function setup() {
 
 definePageMeta({
   layout: "normal",
+  middleware: "is-setup"
 
 })
 </script>
