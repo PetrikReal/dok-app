@@ -25,7 +25,7 @@ async function signInWithMicrosoft() {
     console.log(authData)
     console.log(pb.authStore.exportToCookie({ httpOnly: false }))
     if (pb.authStore.isValid) {
-      navigateTo("/")
+      navigateTo("/setup")
     }
   } catch (e) {
     console.log(e)
